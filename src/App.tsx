@@ -5,11 +5,12 @@ import { fetchPlugin } from './plugins/fetch-plugin';
 import CodeEditor from './components/code-editor';
 
 import 'bulmaswatch/superhero/bulmaswatch.min.css'
+import Preview from './components/preview';
 
 function App() {
 
   const ref = useRef<any>();
-  const iframe = useRef<any>();
+  const [code, setCode] = useState('');
   const [input, setInput] = useState('');
 
   const startService = async () => {
@@ -27,8 +28,6 @@ function App() {
       return;
     }
 
-    iframe.current.srcdoc = html
-
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -42,8 +41,7 @@ function App() {
 
     //console.log(result);
 
-    //setCode(result.outputFiles[0].text);
-    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
+    setCode(result.outputFiles[0].text);
   };
 
   const html = `
@@ -71,11 +69,9 @@ function App() {
 
       <CodeEditor initialValue="const a = 1;" onChange={(value) => setInput(value)}/>
 
-      <textarea value={input} onChange={e=>setInput(e.target.value)}></textarea>
-
       <button onClick={handler}>Submit</button>
 
-      <iframe title='preview window' ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+      <Preview code={code} />
     </div>
   );
 }
