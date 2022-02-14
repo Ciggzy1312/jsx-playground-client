@@ -47,14 +47,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue })=>{
                 language="javascript"
                 height="100%"
                 options={{
-                wordWrap: 'on',
-                minimap: { enabled: false },
-                showUnused: false,
-                folding: false,
-                lineNumbersMinChars: 3,
-                fontSize: 16,
-                scrollBeyondLastLine: false,
-                automaticLayout: true,
+                    wordWrap: 'on',
+                    minimap: { enabled: false },
+                    showUnused: false,
+                    folding: false,
+                    lineNumbersMinChars: 3,
+                    fontSize: 16,
+                    scrollBeyondLastLine: false,
+                    automaticLayout: true,
                 }}
             />
         </div>
