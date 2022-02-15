@@ -32,7 +32,9 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
     // reset the iFrame with text delete  
     iframe.current.srcdoc = html;
     // set bundled code in the iFrame for preview
-    iframe.current.contentWindow.postMessage(code, '*');
+    setTimeout(()=>{
+      iframe.current.contentWindow.postMessage(code, '*');
+    }, 50)
   }, [code]);
 
   return (
