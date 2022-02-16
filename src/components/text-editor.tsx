@@ -6,6 +6,7 @@ const TextEditor: React.FC = () => {
 
     const ref = useRef<HTMLDivElement | null>(null)
     const [ edit, setEdit] = useState(false)
+    const [ value, setValue] = useState('# Preview Window')
 
     useEffect(() => {
 
@@ -25,13 +26,15 @@ const TextEditor: React.FC = () => {
     
 
     if(edit){
-        return <div ref={ref}>
-            <MDEditor />
+        return <div className="text-editor" ref={ref}>
+            <MDEditor value={value} onChange={(v)=>setValue(v || '')}/>
         </div>
     }
 
-    return <div onClick={()=> setEdit(true)}>
-        <MDEditor.Markdown source={'# Preview Window'} />
+    return <div className="text-editor" onClick={()=> setEdit(true)}>
+        <div className="card-content">
+            <MDEditor.Markdown source={value} />
+        </div>
     </div>
 }
 
