@@ -18,15 +18,38 @@ const CodeCell: React.FC<CodeCellProps> = ({cell}) => {
     state.bundles && state.bundles[cell.id]
   ))
 
+  const cumulativeCode = useTypedSelector((state)=>{
+
+    if(state.cells){
+      const { data, order } = state.cells
+      const orderedCells = order.map(id=> data[id])
+      
+      const cumulativeCode = []
+      for(let c of orderedCells){
+        if(c.type === 'code'){
+          cumulativeCode.push(c.content)
+        }
+        if(c.id === cell.id){
+          break;
+        }
+      }
+
+      return cumulativeCode
+    }
+  })
+
   useEffect(()=>{
     const timer = setTimeout(async ()=>{
-      createBundle(cell.id, cell.content)
+      if(cumulativeCode){
+        createBundle(cell.id, cumulativeCode.join('\n'))
+      }
     },1500)
 
     return ()=>{
       clearTimeout(timer)
     }
-  }, [cell.id, cell.content])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cumulativeCode?.join('\n'), cell.id])
 
   return (
     <Resizable direction='vertical'>
