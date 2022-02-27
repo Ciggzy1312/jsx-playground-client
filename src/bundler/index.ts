@@ -28,13 +28,12 @@ const bundler = async (rawCode: string) => {
       err:''
     }
 
-  } catch (err: unknown) {
-    if(err instanceof Error){
+  } catch (err: any) {
       return {
         code: '',
         err: err.message
       }
-    }
+    
   }
 
 };
